@@ -37,7 +37,7 @@ export class CellComponent implements OnInit {
   }
 
   triggerCell() {
-    console.log(`triggered; isFlagged: ${this.isFlagged}`);
+    console.log(`triggered; isFlagged: ${this.isFlagged}; hasMine: ${this.hasMine()}`);
   }
 
 }

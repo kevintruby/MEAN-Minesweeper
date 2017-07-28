@@ -1,5 +1,6 @@
 <div class="cell text-center" (click)="triggerCell()" (contextmenu)="toggleFlag()">
   <span>
     <span *ngIf="isFlagged" class="glyphicon glyphicon-flag"></span>
+    <span *ngIf="hasMine()" class="glyphicon glyphicon-certificate"></span>
   </span>
 </div>

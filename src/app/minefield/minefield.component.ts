@@ -3,7 +3,7 @@ import { GameManagerService } from "../game-manager.service";
 import { isNullOrUndefined } from "util";
 
 const GRID_SIZES = {
-  small: 8,
+  small: 9,
   medium: 16,
   large: 32
 };
@@ -24,7 +24,6 @@ export class MinefieldComponent implements OnInit {
   }
 
   ngOnInit(size?) {
-    this.gameManagerService.init();
     if(isNullOrUndefined(size))
       size = GRID_SIZES.small;
     if(this.gridSize !== size && 0 < size)
