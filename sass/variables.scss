@@ -1,11 +1,17 @@
 // override bootstrap font path
 $icon-font-path: "../src/assets/fonts/bootstrap/";
 
+// grid variables
+$grid-size-small: 8;
+$grid-size-medium: 16;
+$grid-size-large: 32;
+
 // cell variables
 $cell-size: 25px;
-$cell-plain-color: #cccccc;
+$cell-plain-color-gradient-start: #cee0f3;
+$cell-plain-color-gradient-end: #5564ff;
 $cell-cleared-color: #ffffff;
 $cell-border-color: #000000;
-$cell-hover-color: #808080;
+$cell-hover-color: #5ca5da;
 
 $flag-color: #ca1b1b;

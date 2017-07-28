@@ -6,6 +6,19 @@
   display: none !important;
 }
 
+.minefield {
+  background: linear-gradient(to right bottom, $cell-plain-color-gradient-start, $cell-plain-color-gradient-end);
+  width: ($cell-size * $grid-size-small);
+}
+
+.minefield.medium {
+  width: ($cell-size * $grid-size-medium);
+}
+
+.minefield.large {
+  width: ($cell-size * $grid-size-large);
+}
+
 .minefield .row {
   margin: 0;
   height: $cell-size;
@@ -20,12 +33,12 @@
   width: $cell-size;
   height: $cell-size;
   border: 1px solid $cell-border-color;
-  background-color: $cell-plain-color;
   vertical-align: middle;
 }
 
 .cell:not(.cleared):hover {
-  background-color: $cell-hover-color;
+  background: linear-gradient(to right bottom, $cell-plain-color-gradient-start, $cell-plain-color-gradient-end), $cell-hover-color;
+  background-blend-mode: luminosity;
 }
 
 .cell.cleared {

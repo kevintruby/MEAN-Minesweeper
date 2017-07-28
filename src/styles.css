@@ -5817,6 +5817,16 @@ button.close {
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important; }
 
+.minefield {
+  background: linear-gradient(to right bottom, #cee0f3, #5564ff);
+  width: 200px; }
+
+.minefield.medium {
+  width: 400px; }
+
+.minefield.large {
+  width: 800px; }
+
 .minefield .row {
   margin: 0;
   height: 25px; }
@@ -5829,11 +5839,11 @@ button.close {
   width: 25px;
   height: 25px;
   border: 1px solid #000000;
-  background-color: #cccccc;
   vertical-align: middle; }
 
 .cell:not(.cleared):hover {
-  background-color: #808080; }
+  background: linear-gradient(to right bottom, #cee0f3, #5564ff), #5ca5da;
+  background-blend-mode: luminosity; }
 
 .cell.cleared {
   background-color: #ffffff; }
