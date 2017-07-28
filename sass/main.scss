@@ -42,11 +42,16 @@
 }
 
 .cell.cleared {
-  background-color: $cell-cleared-color;
+  background: linear-gradient(to right bottom, $cell-cleared-color-gradient-start, $cell-cleared-color-gradient-end);
 }
 
 .cell .glyphicon-flag {
   color: $flag-color;
+}
+
+.minefield .cell span {
+  cursor: default;
+  vertical-align: middle;
 }
 
 /*

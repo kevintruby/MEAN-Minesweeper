@@ -12,7 +12,9 @@ export class CellComponent implements OnInit {
 
   @Input() row: number = 0;
   @Input() col: number = 0;
-  isFlagged: boolean = false;
+  adjacent_mine_count: number = 0;
+  is_cleared: boolean = false;
+  is_flagged: boolean = false;
   mine: MineComponent = null;
 
   constructor(private gameManagerService: GameManagerService) {}
@@ -22,6 +24,11 @@ export class CellComponent implements OnInit {
   }
 
   adjacentMineCount() {
+    return this.adjacent_mine_count;
+  }
+
+  clearCell() {
+    this.is_cleared = true;
   }
 
   hasMine() {
@@ -29,15 +36,31 @@ export class CellComponent implements OnInit {
   }
 
   isCleared() {
+    return !this.hasMine() && this.is_cleared;
   }
 
-  toggleFlag($event) {
-    this.isFlagged = !this.isFlagged;
+  isFlagged() {
+    return this.is_flagged;
+  }
+
+  toggleFlag() {
+    if(this.isCleared())
+      return false;
+    // @todo: check count of flags used against limit; only allow placement if within limit
+    this.is_flagged = !this.is_flagged;
     return false;
   }
 
   triggerCell() {
-    console.log(`triggered; isFlagged: ${this.isFlagged}; hasMine: ${this.hasMine()}`);
+    if(this.isCleared() || this.isFlagged())
+      return false;
+    if(this.hasMine()) {
+      console.log('BOOM! GAME OVER, MAN!');
+    }
+    else {
+      // @todo: clear this cell, call service to recursively clear adjacent cells
+      this.clearCell();
+    }
   }
 
 }

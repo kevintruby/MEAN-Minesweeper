@@ -5846,10 +5846,14 @@ button.close {
   background-blend-mode: luminosity; }
 
 .cell.cleared {
-  background-color: #ffffff; }
+  background: linear-gradient(to right bottom, #ffffff, #ababab); }
 
 .cell .glyphicon-flag {
   color: #ca1b1b; }
+
+.minefield .cell span {
+  cursor: default;
+  vertical-align: middle; }
 
 /*
 I'm rusty on CSS animations, and copied the below CSS from the following snippet link:

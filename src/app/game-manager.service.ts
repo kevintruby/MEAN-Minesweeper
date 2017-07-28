@@ -29,7 +29,21 @@ export class GameManagerService {
 
   constructor() { }
 
-  init() {
+  getSurroundingCells(cell: CellComponent): CellComponent[] {
+    let cells = [];
+    _.forEach(_.range(cell.row -1, cell.row + 2), (row: number) => {
+      _.forEach(_.range(cell.col - 1, cell.col + 2), (col: number) => {
+        if(cell.row === row && cell.col === col)
+          return;
+        if(row >= 0 && col >= 0 && row < this.grid_size && col < this.grid_size) {
+          cells.push(this.cells[row][col]);
+        }
+      });
+    });
+    return cells;
+  }
+
+  init(): void {
     let limit = Math.ceil(Math.pow(this.grid_size, 2) * this.difficulty_ratio);
     this.flag_limit = limit;
     this.mine_limit = limit;
@@ -44,9 +58,21 @@ export class GameManagerService {
         mine_count++;
       }
     }
+
+    _.forEach(this.cells, (row: CellComponent[]) => {
+      _.forEach(row, (cell: CellComponent) => {
+        if(cell.adjacentMineCount())
+          return;
+        let cells: CellComponent[] = this.getSurroundingCells(cell);
+        _.forEach(cells, (adjacent_cell: CellComponent) => {
+          if(adjacent_cell.hasMine())
+            cell.adjacent_mine_count++;
+        });
+      });
+    });
   }
 
-  registerCell(cell: CellComponent) {
+  registerCell(cell: CellComponent): void {
     if(!this.cells.length)
       for(let i = 0; i < this.grid_size; i++)
         this.cells[i] = [];
