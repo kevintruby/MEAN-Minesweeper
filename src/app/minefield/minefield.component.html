@@ -1,3 +1,7 @@
-<p>
-  minefield works!
-</p>
+<div class="minefield">
+  <div *ngFor="let row of cells; index as i" class="row">
+    <div *ngFor="let col of row" class="cell">
+      <app-cell [row]="i" [col]="col"></app-cell>
+    </div>
+  </div>
+</div>

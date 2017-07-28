@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { CellComponent } from './cell/cell.component';
+import { GameManagerService } from './game-manager.service';
 import { MineComponent } from './mine/mine.component';
 import { MinefieldComponent } from './minefield/minefield.component';
 
@@ -20,7 +21,7 @@ import { MinefieldComponent } from './minefield/minefield.component';
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [GameManagerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
