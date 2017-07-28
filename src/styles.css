@@ -5821,18 +5821,25 @@ button.close {
   margin: 0;
   height: 25px; }
 
+.cell-wrapper {
+  display: inline-block; }
+
 .cell {
   display: inline-block;
   width: 25px;
   height: 25px;
   border: 1px solid #000000;
-  background-color: #cccccc; }
+  background-color: #cccccc;
+  vertical-align: middle; }
 
 .cell:not(.cleared):hover {
   background-color: #808080; }
 
 .cell.cleared {
   background-color: #ffffff; }
+
+.cell .glyphicon-flag {
+  color: #ca1b1b; }
 
 /*
 I'm rusty on CSS animations, and copied the below CSS from the following snippet link:

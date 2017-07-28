@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CellComponent } from "../cell/cell.component";
 import { GameManagerService } from "../game-manager.service";
 import { isNullOrUndefined } from "util";
 

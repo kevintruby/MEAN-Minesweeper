@@ -11,12 +11,17 @@
   height: $cell-size;
 }
 
+.cell-wrapper {
+  display: inline-block;
+}
+
 .cell {
   display: inline-block;
   width: $cell-size;
   height: $cell-size;
   border: 1px solid $cell-border-color;
   background-color: $cell-plain-color;
+  vertical-align: middle;
 }
 
 .cell:not(.cleared):hover {
@@ -25,6 +30,10 @@
 
 .cell.cleared {
   background-color: $cell-cleared-color;
+}
+
+.cell .glyphicon-flag {
+  color: $flag-color;
 }
 
 /*

@@ -10,20 +10,12 @@ import { MineComponent } from "../mine/mine.component";
 })
 export class CellComponent implements OnInit {
 
-  @Input()
-  row: number = 0;
-  @Input()
-  col: number = 0;
+  @Input() row: number = 0;
+  @Input() col: number = 0;
+  isFlagged: boolean = false;
   mine: MineComponent = null;
 
   constructor(private gameManagerService: GameManagerService) {}
-
-  // constructor(row: number, col: number) {
-  //   if(!isNullOrUndefined(row))
-  //     this.row = row;
-  //   if(!isNullOrUndefined(col))
-  //     this.col = col;
-  // }
 
   ngOnInit() {
     this.gameManagerService.registerCell(this);
@@ -37,6 +29,15 @@ export class CellComponent implements OnInit {
   }
 
   isCleared() {
+  }
+
+  toggleFlag($event) {
+    this.isFlagged = !this.isFlagged;
+    return false;
+  }
+
+  triggerCell() {
+    console.log(`triggered; isFlagged: ${this.isFlagged}`);
   }
 
 }
