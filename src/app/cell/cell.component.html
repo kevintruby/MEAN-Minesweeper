@@ -1,7 +1,7 @@
 <div class="cell text-center" (click)="triggerCell()" (contextmenu)="toggleFlag()" [ngClass]="{'cleared': isCleared()}">
   <span>
     <span *ngIf="isFlagged()" class="glyphicon glyphicon-flag"></span>
-    <span *ngIf="hasMine()" class="glyphicon glyphicon-certificate" [ngClass]="{'hidden': isFlagged()}"></span>
+    <span *ngIf="hasMine()" class="glyphicon glyphicon-certificate mine" [ngClass]="{'hidden': (isFlagged() || !gameManagerService.isGameOver()), 'exploded': mine.isTriggered()}"></span>
     <span *ngIf="isCleared() && adjacentMineCount()">{{adjacentMineCount()}}</span>
   </span>
 </div>

@@ -10,6 +10,13 @@ const DIFFICULTY_RATIOS = {
   hard: 0.4
 };
 
+const GAME_STATES = {
+  ready: 'READY',
+  in_progress: 'IN_PROGRESS',
+  complete: 'COMPLETE',
+  failed: 'FAILED'
+};
+
 const GRID_SIZES = {
   small: 9,
   medium: 16,
@@ -18,6 +25,8 @@ const GRID_SIZES = {
 
 @Injectable()
 export class GameManagerService {
+
+  game_state: string = GAME_STATES.ready;
 
   cells: CellComponent[][] = [];
   grid_size: number = GRID_SIZES.medium;
@@ -38,6 +47,14 @@ export class GameManagerService {
       if(!adjacent_cell.adjacentMineCount())
         this.cascadingCellClear(adjacent_cell);
     });
+  }
+
+  gameOver(): void {
+    this.game_state = GAME_STATES.failed;
+  }
+
+  getGameState(): string {
+    return this.game_state;
   }
 
   getSurroundingCells(cell: CellComponent): CellComponent[] {
@@ -81,6 +98,10 @@ export class GameManagerService {
         });
       });
     });
+  }
+
+  isGameOver(): boolean {
+    return GAME_STATES.failed === this.game_state;
   }
 
   registerCell(cell: CellComponent): void {

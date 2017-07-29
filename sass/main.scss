@@ -54,6 +54,10 @@
   vertical-align: middle;
 }
 
+.cell .mine.exploded {
+  color: $mine-exploded-color;
+}
+
 /*
 I'm rusty on CSS animations, and copied the below CSS from the following snippet link:
 https://bootsnipp.com/snippets/featured/glyphicon-animate-rotation-and-flip

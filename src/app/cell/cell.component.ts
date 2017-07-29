@@ -17,7 +17,11 @@ export class CellComponent implements OnInit {
   is_flagged: boolean = false;
   mine: MineComponent = null;
 
-  constructor(private gameManagerService: GameManagerService) {}
+  gameManagerService: GameManagerService = null;
+
+  constructor(gameManagerService: GameManagerService) {
+    this.gameManagerService = gameManagerService;
+  }
 
   ngOnInit() {
     this.gameManagerService.registerCell(this);
@@ -63,8 +67,8 @@ export class CellComponent implements OnInit {
     if(this.isCleared() || this.isFlagged())
       return false;
     if(this.hasMine()) {
-      console.log('BOOM! GAME OVER, MAN!');
       this.mine.trigger();
+      this.gameManagerService.gameOver();
     }
     else {
       this.clearCell();
