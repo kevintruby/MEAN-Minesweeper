@@ -7,21 +7,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MineComponent implements OnInit {
 
+  is_armed: boolean = true;
+  is_triggered: boolean = false;
+
   constructor() { }
 
   ngOnInit() {
   }
 
-  isDisarmed() {
+  isDisarmed(): boolean {
+    return !this.is_armed;
   }
 
-  isTriggered() {
+  isTriggered(): boolean {
+    return this.is_triggered;
   }
 
-  disarm() {
+  disarm(): void {
+    this.is_armed = false;
   }
 
-  trigger() {
+  rearm(): void {
+    this.is_armed = true;
+  }
+
+  trigger(): void {
+    this.is_triggered = true;
   }
 
 }

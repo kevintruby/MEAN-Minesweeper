@@ -20,7 +20,7 @@ const GRID_SIZES = {
 export class GameManagerService {
 
   cells: CellComponent[][] = [];
-  grid_size: number = GRID_SIZES.small;
+  grid_size: number = GRID_SIZES.medium;
   difficulty_ratio: number = DIFFICULTY_RATIOS.easy;
 
   flag_limit: number = 0;
@@ -28,6 +28,17 @@ export class GameManagerService {
   registered_cell_count: number = 0;
 
   constructor() { }
+
+  cascadingCellClear(cell: CellComponent): void {
+    let adjacent_cells: CellComponent[] = this.getSurroundingCells(cell);
+    _.forEach(adjacent_cells, (adjacent_cell: CellComponent) => {
+      if(adjacent_cell.isCleared() || adjacent_cell.hasMine())
+        return;
+      adjacent_cell.clearCell();
+      if(!adjacent_cell.adjacentMineCount())
+        this.cascadingCellClear(adjacent_cell);
+    });
+  }
 
   getSurroundingCells(cell: CellComponent): CellComponent[] {
     let cells = [];

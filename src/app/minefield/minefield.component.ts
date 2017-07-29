@@ -17,15 +17,22 @@ const GRID_SIZES = {
 export class MinefieldComponent implements OnInit {
 
   // @todo: move to GameManagerService?
-  gridSize: number = GRID_SIZES.small;
+  gridSize: number = GRID_SIZES.medium;
   cells: number[][] = [];
 
-  constructor(private gameManagerService: GameManagerService) {
+  constructor(private gameManagerService: GameManagerService) {}
+
+  getSizeClass(): string {
+    if(GRID_SIZES.medium === this.gridSize)
+      return 'medium';
+    if(GRID_SIZES.large === this.gridSize)
+      return 'large';
+    return 'small';
   }
 
   ngOnInit(size?) {
     if(isNullOrUndefined(size))
-      size = GRID_SIZES.small;
+      size = GRID_SIZES.medium;
     if(this.gridSize !== size && 0 < size)
       this.gridSize = size;
     for(let i = 0; i < this.gridSize ; i++)
