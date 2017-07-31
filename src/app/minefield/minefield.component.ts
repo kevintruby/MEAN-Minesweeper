@@ -1,12 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { GameManagerService } from "../game-manager.service";
-import { isNullOrUndefined } from "util";
-
-const GRID_SIZES = {
-  small: 9,
-  medium: 16,
-  large: 32
-};
 
 @Component({
   selector: 'app-minefield',
@@ -16,29 +9,22 @@ const GRID_SIZES = {
 
 export class MinefieldComponent implements OnInit {
 
-  // @todo: move to GameManagerService?
-  gridSize: number = GRID_SIZES.medium;
   cells: number[][] = [];
 
   constructor(private gameManagerService: GameManagerService) {}
 
   getSizeClass(): string {
-    if(GRID_SIZES.medium === this.gridSize)
+    if(this.gameManagerService.GRID_SIZES.medium === this.gameManagerService.grid_size)
       return 'medium';
-    if(GRID_SIZES.large === this.gridSize)
+    if(this.gameManagerService.GRID_SIZES.large === this.gameManagerService.grid_size)
       return 'large';
     return 'small';
   }
 
-  ngOnInit(size?) {
-    if(isNullOrUndefined(size))
-      size = GRID_SIZES.medium;
-    if(this.gridSize !== size && 0 < size)
-      this.gridSize = size;
-    for(let i = 0; i < this.gridSize ; i++)
-    {
+  ngOnInit() {
+    for(let i = 0; i < this.gameManagerService.grid_size ; i++) {
       this.cells[i] = [];
-      for(let j = 0; j < this.gridSize; j++)
+      for(let j = 0; j < this.gameManagerService.grid_size; j++)
         this.cells[i][j] = j;
     }
   }

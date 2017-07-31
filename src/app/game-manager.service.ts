@@ -32,7 +32,7 @@ export class GameManagerService {
   game_state: string = this.GAME_STATES.initializing;
 
   cells: CellComponent[][] = [];
-  grid_size: number = this.GRID_SIZES.medium;
+  grid_size: number = this.GRID_SIZES.small;
   difficulty_ratio: number = this.DIFFICULTY_RATIOS.easy;
 
   flag_limit: number = 0;
