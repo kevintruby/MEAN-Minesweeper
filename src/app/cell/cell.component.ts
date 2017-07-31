@@ -48,7 +48,7 @@ export class CellComponent implements OnInit {
   }
 
   toggleFlag() {
-    if(this.isCleared())
+    if(this.isCleared() || this.gameManagerService.isGameOver() || this.gameManagerService.isGameWon())
       return false;
     // @todo: check count of flags used against limit; only allow placement if within limit
     this.is_flagged = !this.is_flagged;
@@ -66,7 +66,7 @@ export class CellComponent implements OnInit {
   }
 
   triggerCell() {
-    if(this.isCleared() || this.isFlagged())
+    if(this.isCleared() || this.isFlagged() || this.gameManagerService.isGameOver() || this.gameManagerService.isGameWon())
       return false;
     if(this.hasMine()) {
       this.mine.trigger();

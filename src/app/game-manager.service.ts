@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CellComponent } from "./cell/cell.component";
 import { MineComponent } from "./mine/mine.component";
+import { MinefieldComponent } from "./minefield/minefield.component";
 import { isNullOrUndefined } from "util";
 import * as _ from "lodash";
 
@@ -34,8 +35,8 @@ export class GameManagerService {
   cells: CellComponent[][] = [];
   grid_size: number = this.GRID_SIZES.small;
   difficulty_ratio: number = this.DIFFICULTY_RATIOS.easy;
+  minefield: MinefieldComponent = null;
 
-  flag_limit: number = 0;
   mine_limit: number = 0;
   registered_cell_count: number = 0;
 
@@ -60,6 +61,10 @@ export class GameManagerService {
     return this.game_state;
   }
 
+  getMineLimit(): number {
+    return this.mine_limit;
+  }
+
   getSurroundingCells(cell: CellComponent): CellComponent[] {
     let cells = [];
     _.forEach(_.range(cell.row -1, cell.row + 2), (row: number) => {
@@ -74,8 +79,29 @@ export class GameManagerService {
     return cells;
   }
 
+  init(): void {
+    // this method assumes another method has already re-configured the expected size/difficulty properties
+    this.setGameState(this.GAME_STATES.initializing);
+    this.cells = [];
+    this.mine_limit = 0;
+    this.registered_cell_count = 0;
+    this.minefield.init();
+  }
+
   isGameOver(): boolean {
     return this.GAME_STATES.failed === this.getGameState();
+  }
+
+  isGameWon(): boolean {
+    return this.GAME_STATES.complete === this.getGameState();
+  }
+
+  isInitializing(): boolean {
+    return this.GAME_STATES.initializing === this.getGameState();
+  }
+
+  isInProgress(): boolean {
+    return this.GAME_STATES.in_progress === this.getGameState();
   }
 
   isNewGame(): boolean {
@@ -85,9 +111,7 @@ export class GameManagerService {
   populateMinefield(init_cell: CellComponent): void {
     if(!this.isNewGame())
       return;
-    let limit = Math.ceil(Math.pow(this.grid_size, 2) * this.difficulty_ratio);
-    this.flag_limit = limit;
-    this.mine_limit = limit;
+    this.mine_limit = Math.ceil(Math.pow(this.grid_size, 2) * this.difficulty_ratio);
 
     let mine_count = 0;
     while(mine_count < this.mine_limit) {
@@ -122,8 +146,30 @@ export class GameManagerService {
 
     this.cells[cell.row][cell.col] = cell;
     this.registered_cell_count++;
-    if(this.registered_cell_count !== Math.pow(this.grid_size, 2))
+    if(this.registered_cell_count === Math.pow(this.grid_size, 2))
       this.setGameState(this.GAME_STATES.ready);
+  }
+
+  registerMinefield(minefield: MinefieldComponent): void {
+    this.minefield = minefield;
+  }
+
+  resetGame(): void {
+    this.init();
+  }
+
+  setGameDifficulty(new_game_difficulty: string): void {
+    if(_.indexOf(_.keys(this.DIFFICULTY_RATIOS), new_game_difficulty) > -1) {
+      this.difficulty_ratio = this.DIFFICULTY_RATIOS[new_game_difficulty];
+      this.init();
+    }
+  }
+
+  setGameSize(new_game_size: string): void {
+    if(_.indexOf(_.keys(this.GRID_SIZES), new_game_size) > -1) {
+      this.grid_size = this.GRID_SIZES[new_game_size];
+      this.init();
+    }
   }
 
   setGameState(new_game_state: string): void {

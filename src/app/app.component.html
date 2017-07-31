@@ -1,1 +1,37 @@
-<app-minefield></app-minefield>
+<div class="row game-controls">
+  <div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <strong>Size:</strong> {{getSizeKey() | titlecase}}
+      <div class="caret"></div>
+    </button>
+    <ul class="dropdown-menu">
+      <li (click)="gameManagerService.setGameSize(grid_size)" *ngFor="let grid_size of gameManagerService.GRID_SIZES | keys">
+        <a href="#">{{grid_size | titlecase}}</a>
+      </li>
+    </ul>
+  </div>
+  <div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <strong>Difficulty:</strong> {{getDifficultyKey() | titlecase}}
+      <div class="caret"></div>
+    </button>
+    <ul class="dropdown-menu">
+      <li (click)="gameManagerService.setGameDifficulty(difficulty_ratio)" *ngFor="let difficulty_ratio of gameManagerService.DIFFICULTY_RATIOS | keys">
+        <a href="#">{{difficulty_ratio | titlecase}}</a>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="row game-status">
+  <div>
+    <button class="btn btn-default" type="button" (click)="gameManagerService.resetGame()">
+      <span class="glyphicon glyphicon-ok text-success" [ngClass]="{'show': gameManagerService.isGameWon()}"></span>
+      <span class="glyphicon glyphicon-remove text-danger" [ngClass]="{'show': gameManagerService.isGameOver()}"></span>
+      <span class="glyphicon glyphicon-refresh text-info" [ngClass]="{'show': gameManagerService.isInitializing(), 'gly-spin': gameManagerService.isInitializing()}"></span>
+      <span class="glyphicon glyphicon-option-horizontal text-muted" [ngClass]="{'show': gameManagerService.isNewGame() || gameManagerService.isInProgress()}"></span>
+    </button>
+  </div>
+</div>
+<div class="row">
+  <app-minefield></app-minefield>
+</div>

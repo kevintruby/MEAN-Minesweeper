@@ -8,13 +8,15 @@ import { CellComponent } from './cell/cell.component';
 import { GameManagerService } from './game-manager.service';
 import { MineComponent } from './mine/mine.component';
 import { MinefieldComponent } from './minefield/minefield.component';
+import { KeysPipe } from './keys.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     CellComponent,
     MineComponent,
-    MinefieldComponent
+    MinefieldComponent,
+    KeysPipe
   ],
   imports: [
     BrowserModule,

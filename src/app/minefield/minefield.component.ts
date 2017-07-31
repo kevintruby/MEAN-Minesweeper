@@ -21,12 +21,18 @@ export class MinefieldComponent implements OnInit {
     return 'small';
   }
 
-  ngOnInit() {
+  init(): void {
+    this.cells = [];
     for(let i = 0; i < this.gameManagerService.grid_size ; i++) {
       this.cells[i] = [];
       for(let j = 0; j < this.gameManagerService.grid_size; j++)
         this.cells[i][j] = j;
     }
+  }
+
+  ngOnInit() {
+    this.gameManagerService.registerMinefield(this);
+    this.init();
   }
 
 }

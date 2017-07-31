@@ -1,4 +1,5 @@
 @import "variables";
+// remove the "_" next to bootstrap for full features import
 @import "../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap";
 
 // make sure ng-cloak components are hidden until Angular deems them ready for rendering
@@ -6,22 +7,50 @@
   display: none !important;
 }
 
+.game-controls,
+.game-status {
+  //padding: 15px 0;
+  //border: 1px solid #000000;
+}
+
+.game-controls > div,
+.game-status > div {
+  display: inline-block;
+}
+
+.game-status .glyphicon {
+  // figure out how to use the .hidden(); mixin?
+  display: none;
+}
+
+.game-status button:hover {
+  .glyphicon:not(.glyphicon-refresh) {
+    // figure out how to use the .hidden(); mixin?
+    display: none !important;
+  }
+
+  .glyphicon.glyphicon-refresh {
+    // figure out how to use the .show(); mixin?
+    display: block;
+  }
+}
+
 .minefield {
   background: linear-gradient(to right bottom, $cell-plain-color-gradient-start, $cell-plain-color-gradient-end);
   width: ($cell-size * $grid-size-small);
-}
 
-.minefield.medium {
-  width: ($cell-size * $grid-size-medium);
-}
+  &.medium {
+    width: ($cell-size * $grid-size-medium);
+  }
 
-.minefield.large {
-  width: ($cell-size * $grid-size-large);
-}
+  &.large {
+    width: ($cell-size * $grid-size-large);
+  }
 
-.minefield .row {
-  margin: 0;
-  height: $cell-size;
+  .row {
+    margin: 0;
+    height: $cell-size;
+  }
 }
 
 .cell-wrapper {
@@ -34,28 +63,28 @@
   height: $cell-size;
   border: 1px solid $cell-border-color;
   vertical-align: middle;
-}
 
-.cell:not(.cleared):hover {
-  background: linear-gradient(to right bottom, $cell-plain-color-gradient-start, $cell-plain-color-gradient-end), $cell-hover-color;
-  background-blend-mode: luminosity;
-}
+  &:not(.cleared):hover {
+    background: linear-gradient(to right bottom, $cell-plain-color-gradient-start, $cell-plain-color-gradient-end), $cell-hover-color;
+    background-blend-mode: luminosity;
+  }
 
-.cell.cleared {
-  background: linear-gradient(to right bottom, $cell-cleared-color-gradient-start, $cell-cleared-color-gradient-end);
-}
+  &.cleared {
+    background: linear-gradient(to right bottom, $cell-cleared-color-gradient-start, $cell-cleared-color-gradient-end);
+  }
 
-.cell .glyphicon-flag {
-  color: $flag-color;
+  .glyphicon-flag {
+    color: $flag-color;
+  }
+
+  .mine.exploded {
+    color: $mine-exploded-color;
+  }
 }
 
 .minefield .cell span {
   cursor: default;
   vertical-align: middle;
-}
-
-.cell .mine.exploded {
-  color: $mine-exploded-color;
 }
 
 /*
