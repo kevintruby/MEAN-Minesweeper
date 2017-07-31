@@ -19,14 +19,21 @@
 }
 
 .game-status .glyphicon {
-  // figure out how to use the .hidden(); mixin?
-  display: none;
+  &:not(.glyphicon-flag) {
+    // figure out how to use the .hidden(); mixin?
+    display: none;
+  }
+  &.glyphicon-flag {
+    color: $flag-color;
+  }
 }
 
 .game-status button:hover {
   .glyphicon:not(.glyphicon-refresh) {
-    // figure out how to use the .hidden(); mixin?
-    display: none !important;
+    &:not(.glyphicon-flag) {
+      // figure out how to use the .hidden(); mixin?
+      display: none !important;
+    }
   }
 
   .glyphicon.glyphicon-refresh {

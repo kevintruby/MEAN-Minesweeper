@@ -50,17 +50,19 @@ export class CellComponent implements OnInit {
   toggleFlag() {
     if(this.isCleared() || this.gameManagerService.isGameOver() || this.gameManagerService.isGameWon())
       return false;
-    // @todo: check count of flags used against limit; only allow placement if within limit
-    this.is_flagged = !this.is_flagged;
-    if(this.isFlagged()) {
-      if(this.hasMine())
-        this.mine.disarm();
-      // @todo: decrement number of flags available
-    }
-    else {
-      if(this.hasMine())
-        this.mine.rearm();
-      // @todo: increment number of flags available
+    if(this.gameManagerService.getFlagsAvailable() || this.isFlagged()) {
+      this.is_flagged = !this.is_flagged;
+      if(this.isFlagged()) {
+        if(this.hasMine())
+          this.mine.disarm();
+        this.gameManagerService.decrementFlagsAvailable();
+      }
+      else {
+        if(this.hasMine())
+          this.mine.rearm();
+        this.gameManagerService.incrementFlagsAvailable();
+      }
+      this.gameManagerService.checkForWinState();
     }
     return false;
   }
@@ -78,6 +80,7 @@ export class CellComponent implements OnInit {
       this.clearCell();
       // if(!this.adjacentMineCount())
       this.gameManagerService.cascadingCellClear(this);
+      this.gameManagerService.checkForWinState();
     }
   }
 

@@ -37,6 +37,7 @@ export class GameManagerService {
   difficulty_ratio: number = this.DIFFICULTY_RATIOS.easy;
   minefield: MinefieldComponent = null;
 
+  flags_available: number = 0;
   mine_limit: number = 0;
   registered_cell_count: number = 0;
 
@@ -53,16 +54,35 @@ export class GameManagerService {
     });
   }
 
+  checkForWinState(): void {
+    let is_complete = (0 === this.getFlagsAvailable());
+    if(is_complete)
+      _.forEach(this.cells, (row: CellComponent[]) => {
+        _.forEach(row, (cell: CellComponent) => {
+          if(cell.hasMine() && !cell.mine.isDisarmed())
+            is_complete = false;
+          if(!cell.hasMine() && !cell.isCleared())
+            is_complete = false;
+        });
+      });
+    if(is_complete)
+      this.setGameState(this.GAME_STATES.complete);
+  }
+
+  decrementFlagsAvailable(): void {
+    this.flags_available--;
+  }
+
   gameOver(): void {
     this.setGameState(this.GAME_STATES.failed);
   }
 
-  getGameState(): string {
-    return this.game_state;
+  getFlagsAvailable(): number {
+    return this.flags_available;
   }
 
-  getMineLimit(): number {
-    return this.mine_limit;
+  getGameState(): string {
+    return this.game_state;
   }
 
   getSurroundingCells(cell: CellComponent): CellComponent[] {
@@ -79,10 +99,15 @@ export class GameManagerService {
     return cells;
   }
 
+  incrementFlagsAvailable(): void {
+    this.flags_available++;
+  }
+
   init(): void {
     // this method assumes another method has already re-configured the expected size/difficulty properties
     this.setGameState(this.GAME_STATES.initializing);
     this.cells = [];
+    this.flags_available = 0;
     this.mine_limit = 0;
     this.registered_cell_count = 0;
     this.minefield.init();
@@ -112,6 +137,7 @@ export class GameManagerService {
     if(!this.isNewGame())
       return;
     this.mine_limit = Math.ceil(Math.pow(this.grid_size, 2) * this.difficulty_ratio);
+    this.flags_available = this.mine_limit;
 
     let mine_count = 0;
     while(mine_count < this.mine_limit) {
