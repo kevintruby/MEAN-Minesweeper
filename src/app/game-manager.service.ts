@@ -1,36 +1,39 @@
 import { Injectable } from '@angular/core';
 import { CellComponent } from "./cell/cell.component";
 import { MineComponent } from "./mine/mine.component";
-import * as _ from "lodash";
 import { isNullOrUndefined } from "util";
-
-const DIFFICULTY_RATIOS = {
-  easy: 0.25,
-  medium: 0.35,
-  hard: 0.4
-};
-
-const GAME_STATES = {
-  ready: 'READY',
-  in_progress: 'IN_PROGRESS',
-  complete: 'COMPLETE',
-  failed: 'FAILED'
-};
-
-const GRID_SIZES = {
-  small: 9,
-  medium: 16,
-  large: 32
-};
+import * as _ from "lodash";
 
 @Injectable()
 export class GameManagerService {
 
-  game_state: string = GAME_STATES.ready;
+  // CONSTANTS
+  DIFFICULTY_RATIOS = {
+    easy: 0.25,
+    medium: 0.35,
+    hard: 0.4
+  };
+
+  GAME_STATES = {
+    initializing: 'INITIALIZING',
+    ready: 'READY',
+    in_progress: 'IN_PROGRESS',
+    complete: 'COMPLETE',
+    failed: 'FAILED'
+  };
+
+  GRID_SIZES = {
+    small: 9,
+    medium: 16,
+    large: 32
+  };
+  // END CONSTANTS
+
+  game_state: string = this.GAME_STATES.initializing;
 
   cells: CellComponent[][] = [];
-  grid_size: number = GRID_SIZES.medium;
-  difficulty_ratio: number = DIFFICULTY_RATIOS.easy;
+  grid_size: number = this.GRID_SIZES.medium;
+  difficulty_ratio: number = this.DIFFICULTY_RATIOS.easy;
 
   flag_limit: number = 0;
   mine_limit: number = 0;
@@ -50,7 +53,7 @@ export class GameManagerService {
   }
 
   gameOver(): void {
-    this.game_state = GAME_STATES.failed;
+    this.setGameState(this.GAME_STATES.failed);
   }
 
   getGameState(): string {
@@ -71,7 +74,17 @@ export class GameManagerService {
     return cells;
   }
 
-  init(): void {
+  isGameOver(): boolean {
+    return this.GAME_STATES.failed === this.getGameState();
+  }
+
+  isNewGame(): boolean {
+    return this.GAME_STATES.ready === this.getGameState();
+  }
+
+  populateMinefield(init_cell: CellComponent): void {
+    if(!this.isNewGame())
+      return;
     let limit = Math.ceil(Math.pow(this.grid_size, 2) * this.difficulty_ratio);
     this.flag_limit = limit;
     this.mine_limit = limit;
@@ -81,7 +94,7 @@ export class GameManagerService {
       let row = _.random(0, this.grid_size - 1);
       let col = _.random(0, this.grid_size - 1);
       let cell = this.cells[row][col];
-      if(!isNullOrUndefined(cell) && !cell.hasMine()) {
+      if(!isNullOrUndefined(cell) && !cell.hasMine() && !(init_cell.row === row && init_cell.col === col)) {
         cell.mine = new MineComponent();
         mine_count++;
       }
@@ -98,10 +111,8 @@ export class GameManagerService {
         });
       });
     });
-  }
 
-  isGameOver(): boolean {
-    return GAME_STATES.failed === this.game_state;
+    this.setGameState(this.GAME_STATES.in_progress);
   }
 
   registerCell(cell: CellComponent): void {
@@ -111,8 +122,13 @@ export class GameManagerService {
 
     this.cells[cell.row][cell.col] = cell;
     this.registered_cell_count++;
-    if(this.registered_cell_count === Math.pow(this.grid_size, 2))
-      this.init();
+    if(this.registered_cell_count !== Math.pow(this.grid_size, 2))
+      this.setGameState(this.GAME_STATES.ready);
+  }
+
+  setGameState(new_game_state: string): void {
+    if(_.indexOf(_.values(this.GAME_STATES), new_game_state) > -1)
+      this.game_state = new_game_state;
   }
 
 }

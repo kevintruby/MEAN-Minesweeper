@@ -53,11 +53,13 @@ export class CellComponent implements OnInit {
     // @todo: check count of flags used against limit; only allow placement if within limit
     this.is_flagged = !this.is_flagged;
     if(this.isFlagged()) {
-      this.mine.disarm();
+      if(this.hasMine())
+        this.mine.disarm();
       // @todo: decrement number of flags available
     }
     else {
-      this.mine.rearm();
+      if(this.hasMine())
+        this.mine.rearm();
       // @todo: increment number of flags available
     }
     return false;
@@ -71,9 +73,11 @@ export class CellComponent implements OnInit {
       this.gameManagerService.gameOver();
     }
     else {
+      if(this.gameManagerService.isNewGame())
+        this.gameManagerService.populateMinefield(this);
       this.clearCell();
-      if(!this.adjacentMineCount())
-        this.gameManagerService.cascadingCellClear(this);
+      // if(!this.adjacentMineCount())
+      this.gameManagerService.cascadingCellClear(this);
     }
   }
 
