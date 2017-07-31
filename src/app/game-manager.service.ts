@@ -10,9 +10,9 @@ export class GameManagerService {
 
   // CONSTANTS
   DIFFICULTY_RATIOS = {
-    easy: 0.25,
-    medium: 0.35,
-    hard: 0.4
+    easy: 0.15,
+    medium: 0.25,
+    hard: 0.35
   };
 
   GAME_STATES = {
