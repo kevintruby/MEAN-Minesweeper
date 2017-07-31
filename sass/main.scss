@@ -90,6 +90,34 @@
   .mine.exploded {
     color: $mine-exploded-color;
   }
+
+  .adjacent-mine-count {
+    font-weight: bold;
+    &-1 {
+      color: $one-adjacent-mine-color;
+    }
+    &-2 {
+      color: $two-adjacent-mines-color
+    }
+    &-3 {
+      color: $three-adjacent-mines-color
+    }
+    &-4 {
+      color: $four-adjacent-mines-color
+    }
+    &-5 {
+      color: $five-adjacent-mines-color
+    }
+    &-6 {
+      color: $six-adjacent-mines-color
+    }
+    &-7 {
+      color: $seven-adjacent-mines-color
+    }
+    &-8 {
+      color: $eight-adjacent-mines-color
+    }
+  }
 }
 
 .minefield .cell span {

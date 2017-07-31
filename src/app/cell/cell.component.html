@@ -2,6 +2,6 @@
   <span>
     <span *ngIf="isFlagged()" class="glyphicon glyphicon-flag" [ngClass]="{'disarmed': (isFlagged() && hasMine() && (gameManagerService.isGameWon() || gameManagerService.isGameOver()))}"></span>
     <span *ngIf="hasMine()" class="glyphicon glyphicon-certificate mine" [ngClass]="{'hidden': (isFlagged() || !gameManagerService.isGameOver()), 'exploded': mine.isTriggered()}"></span>
-    <span *ngIf="isCleared() && adjacentMineCount()">{{adjacentMineCount()}}</span>
+    <span class="adjacent-mine-count adjacent-mine-count-{{adjacentMineCount()}}" *ngIf="isCleared() && adjacentMineCount()">{{adjacentMineCount()}}</span>
   </span>
 </div>

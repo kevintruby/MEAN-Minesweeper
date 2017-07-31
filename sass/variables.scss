@@ -15,7 +15,19 @@ $cell-cleared-color-gradient-end: #ababab;
 $cell-border-color: #000000;
 $cell-hover-color: #5ca5da;
 
+// mine
 $mine-exploded-color: #ca1b1b;
 
+// flags
 $flag-color: #a01d1d;
 $flag-disarmed-color: #008000;
+
+// adjacent mine counts
+$one-adjacent-mine-color: #505cb8;
+$two-adjacent-mines-color: #2b6a18;
+$three-adjacent-mines-color: #a22b36;
+$four-adjacent-mines-color: #171883;
+$five-adjacent-mines-color: #76191b;
+$six-adjacent-mines-color: #016b6d;
+$seven-adjacent-mines-color: #000000;
+$eight-adjacent-mines-color: #000000;
