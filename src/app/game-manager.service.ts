@@ -46,7 +46,7 @@ export class GameManagerService {
   cascadingCellClear(cell: CellComponent): void {
     let adjacent_cells: CellComponent[] = this.getSurroundingCells(cell);
     _.forEach(adjacent_cells, (adjacent_cell: CellComponent) => {
-      if(adjacent_cell.isCleared() || adjacent_cell.hasMine())
+      if(adjacent_cell.isCleared() || adjacent_cell.hasMine() || adjacent_cell.isFlagged())
         return;
       adjacent_cell.clearCell();
       if(!adjacent_cell.adjacentMineCount())

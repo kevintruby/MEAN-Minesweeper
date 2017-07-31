@@ -82,6 +82,9 @@
 
   .glyphicon-flag {
     color: $flag-color;
+    &.disarmed {
+      color: $flag-disarmed-color;
+    }
   }
 
   .mine.exploded {
